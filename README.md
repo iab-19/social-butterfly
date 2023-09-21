@@ -1,6 +1,6 @@
 
   <!-- Remove comments after generation as they are to be used as a guide to help get started-->
-  # Social Butterfly
+  # Social Butterfly 🦋
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -62,4 +62,3 @@
   A link to my [GitHub Profile](https://www.github.com/iab-19)
 
   If you have any questions, please reach out to me via email: iab.jr10@gmail.com.
-
