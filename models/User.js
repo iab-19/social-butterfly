@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const Thought = require('./Thought');
 
 // Schema to create User model
 
@@ -16,6 +15,7 @@ const userSchema = new Schema(
             required: true,
             unique: true,
             // TODO: email validation
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/],
         },
         thoughts: [
             {
@@ -50,4 +50,4 @@ userSchema
 // Initialize the User model
 const User = model('user', userSchema);
 
-moodule.exports = User;
+module.exports = User;
