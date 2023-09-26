@@ -1,4 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
+
+// Schema to create reaction subdocument
 const reactionSchema = new Schema(
     {
       reactionId: {
@@ -44,11 +46,21 @@ const thoughtSchema = new Schema(
             required: true,
             ref: 'User',
         },
-        reactions: [
-           reactionSchema
-        ],
+        reactions: [reactionSchema],
+    },
+    {
+      toJSON: {
+        getters: true,
+        virtuals: true,
+      },
     }
 );
+
+thoughtSchema
+    .virtual('reactionCount')
+    .get(function () {
+      return this.reactions.length;
+    });
 
 const Thought = model('Thought', thoughtSchema);
 module.exports = Thought;

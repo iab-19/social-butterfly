@@ -102,12 +102,15 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Remove assignment from a student
+  // Remove reaction from a thought
   async removeReaction(req, res) {
+    console.log('You are removing a reaction');
+    console.log(req.params.thoughtId);
+    console.log(req.params.reactionId);
     try {
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $pull: { reactions: { reactionId: req.params.reactionId } } },
+        { $pull: { reactions: { reactionId: req.params.reactionId} } },
         { runValidators: true, new: true }
       );
 
