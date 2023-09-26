@@ -29,6 +29,15 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
+    //   thought._id
+      // findone and update
+      const user = await User.findOneAndUpdate({ _id: req.body.userId },
+       { $push: { thoughts: thought._id } },
+       { new: true } );
+        if (!user) {
+            res.status(404).json({ message: 'No user with that ID' });
+        }
+
       res.json(thought);
     } catch (err) {
       console.log(err);
@@ -67,15 +76,17 @@ module.exports = {
     }
   },
 
-   // Add an assignment to a student
+   // Add an reaction to a thought
    async addReaction(req, res) {
     console.log('You are adding a reaction');
+    console.log('testing')
     console.log(req.body);
 
     try {
+        console.log("trying find and update");
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { reactions: req.body } },
+        { $push: { reactions: req.body } },
         { runValidators: true, new: true }
       );
 
@@ -87,6 +98,7 @@ module.exports = {
 
       res.json(thought);
     } catch (err) {
+        console.log("errored out: ", JSON.stringify(err));
       res.status(500).json(err);
     }
   },
