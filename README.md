@@ -26,7 +26,8 @@
 
   ## Installation
   Fork the code in this repo and run 'node index.js' in the command line to start the server. Use Insomnia or any similar application
-  to navigate the routes.
+  to navigate the routes.  
+  [Video Walkthrough](https://drive.google.com/file/d/1wL5pVRBlD5Pm_LcSuVvcraoGgKRurZ2k/view)
 
   <!-- What are they steps required to install your project? Provide a step-by-step description of how to get the development environment running. -->
 
