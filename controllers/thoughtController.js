@@ -1,26 +1,32 @@
+// Import user and thought models
 const { User, Thought } = require('../models');
 
 module.exports = {
-  // Get all thought
+  // Get all thoughts
   async getThoughts(req, res) {
     try {
       const thought = await Thought.find();
+    //   display all thoughts in json format
       res.json(thought);
+    //   error handling
     } catch (err) {
       res.status(500).json(err);
     }
   },
-  // Get a thought
+  // Get a thought by its id
   async getSingleThought(req, res) {
     try {
       const thought = await Thought.findOne({ _id: req.params.thoughtId })
+    //   ommit the version
         .select('-__v');
 
       if (!thought) {
+        // Display a message if there is no thought with that id
         return res.status(404).json({ message: 'No thought with that ID' });
       }
-
+    //   Displays the thought in json format
       res.json(thought);
+      // Error handling
     } catch (err) {
       res.status(500).json(err);
     }
@@ -28,17 +34,18 @@ module.exports = {
   // Create a thought
   async createThought(req, res) {
     try {
+        // Create a thought and update the thoughts array of the user
       const thought = await Thought.create(req.body);
-    //   thought._id
-      // findone and update
       const user = await User.findOneAndUpdate({ _id: req.body.userId },
        { $push: { thoughts: thought._id } },
        { new: true } );
         if (!user) {
+            // Displays a message if there is no user with that id
             res.status(404).json({ message: 'No user with that ID' });
         }
-
+        // Displays the new thought in  json format
       res.json(thought);
+    //   Error handling
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -47,19 +54,24 @@ module.exports = {
   // Delete a thought
   async deleteThought(req, res) {
     try {
+        // Delete the thought with the specified id
       const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
 
       if (!thought) {
+        // Displays a message if there is no thought with that id
         res.status(404).json({ message: 'No thought with that ID' });
       }
+    //   Displays a message confirming the thought has been deleted
       res.json({ message: 'Thought deleted!' });
+    //   Error handling
     } catch (err) {
       res.status(500).json(err);
     }
   },
-  // Update a course
+  // Update a thought
   async updateThought(req, res) {
     try {
+        // Update the thought with the specified id
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $set: req.body },
@@ -67,10 +79,12 @@ module.exports = {
       );
 
       if (!thought) {
+        // Displays a message if there is no thought with that id
         res.status(404).json({ message: 'No thought with this id!' });
       }
-
+        // Displays the updated thought in json format
       res.json(thought);
+    //   Error handling
     } catch (err) {
       res.status(500).json(err);
     }
@@ -78,12 +92,8 @@ module.exports = {
 
    // Add an reaction to a thought
    async addReaction(req, res) {
-    console.log('You are adding a reaction');
-    console.log('testing')
-    console.log(req.body);
-
     try {
-        console.log("trying find and update");
+        // Add a reaction by updating the reactions array in the thought model
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $push: { reactions: req.body } },
@@ -91,23 +101,20 @@ module.exports = {
       );
 
       if (!thought) {
-        return res
-          .status(404)
-          .json({ message: 'No thought found with that ID :(' });
+        // Displays a message is there is no thought with that id
+        res.status(404).json({ message: 'No thought found with this ID :(' });
       }
-
+        // Display the thought with the reaction added to it in json format
       res.json(thought);
+    //   Error handling
     } catch (err) {
-        console.log("errored out: ", JSON.stringify(err));
       res.status(500).json(err);
     }
   },
   // Remove reaction from a thought
   async removeReaction(req, res) {
-    console.log('You are removing a reaction');
-    console.log(req.params.thoughtId);
-    console.log(req.params.reactionId);
     try {
+        // Remove a reaction by updating the reactions array in the thought model
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $pull: { reactions: { reactionId: req.params.reactionId} } },
@@ -115,12 +122,12 @@ module.exports = {
       );
 
       if (!thought) {
-        return res
-          .status(404)
-          .json({ message: 'No thought found with that ID :(' });
+        // Displays a message if there is no thought with that id
+        res.status(404).json({ message: 'No thought found with this ID :(' });
       }
-
+        // Display the thought with the reaction removed in json format
       res.json(thought);
+    //   Error handling
     } catch (err) {
       res.status(500).json(err);
     }
