@@ -25,7 +25,8 @@
 
 
   ## Installation
-  tbd
+  Fork the code in this repo and run 'node index.js' in the command line to start the server. Use Insomnia or any similar application
+  to navigate the routes.
 
   <!-- What are they steps required to install your project? Provide a step-by-step description of how to get the development environment running. -->
 
@@ -54,7 +55,9 @@
   industry standard, but you can always write your own.-->
 
   ## Tests
-  tbd
+  The following tests were completed:  
+  GET all Users, GET 1 user, POST a new User, UPDATE a user, DELETE a User, ADD a Friend, DELETE a friend.  
+  GET all Thoughts, GET 1 Thought, POST a new Thought, UPDATE a Thought, DELETE a Thought, ADD a Reaction, DELETE a Reaction.
 
   <!-- Go the extra mile and write tests for your application. Then provide examples on how to run them here. -->
 
